@@ -20,6 +20,9 @@ module.exports = {
       },
       screens: {
         'phone': '500px',
+      },
+      objectPosition: {
+        'unset': 'unset'
       }
     },
   },
