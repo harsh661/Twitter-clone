@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import Avatar from './Avatar'
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 
 const Form = () => {
+  const supabase = useSupabaseClient()
+  const session = useSession()
+
+  useEffect(() => {
+    supabase.from('profiles')
+    .select()
+    .eq('id', session.user.id)
+    .then(result => console.log(result.data[0]?.name))
+  }, [])
+
   return (
     <div className='lg:flex gap-3 p-3 border-b hidden'>
-        <img src="https://pbs.twimg.com/profile_images/1605234616033374216/rBeeKbOk_normal.jpg" alt="user" className='w-12 h-12 rounded-full'/>
+        <Avatar />
         <form className='flex flex-col w-full'>
             <textarea name="post" id="post" className='outline-none border-b p-2 w-full resize-y text-xl' placeholder="What's Happening?" />
             <div className='p-3 flex items-center justify-between'>

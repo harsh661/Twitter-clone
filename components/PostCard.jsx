@@ -1,10 +1,11 @@
 import React from 'react'
+import Avatar from './Avatar'
 
 const PostCard = () => {
   return (
     <div className='flex border-b py-3'>
-        <img src="https://pbs.twimg.com/profile_images/1605234616033374216/rBeeKbOk_normal.jpg" alt="user" className='w-12 h-12 rounded-full'/>
-        <main className='flex flex-col px-3 py-1'>
+        <Avatar />
+        <main className='flex w-full flex-col px-3 py-1'>
             <div className='flex items-center gap-3'>
                 <h2 className='font-bold'>Harsh Raj</h2>
                 <p className='text-gray-500'>14h</p>
@@ -12,7 +13,7 @@ const PostCard = () => {
             <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem facilis nostrum aspernatur, iste ut molestiae laboriosam.
             </p>
-            <img src="https://pbs.twimg.com/media/Ft8PGAPX0AMVT_s?format=jpg&name=small" alt="post" className='w-full rounded-lg border my-3'/>
+            <img src="https://pbs.twimg.com/media/Ft8PGAPX0AMVT_s?format=jpg&name=small" alt="post" className='w-full rounded-2xl border my-3'/>
             <div className='flex items-center gap-10 text-sm text-gray-500'>
                 <span className='flex items-center gap-2'>
                     <svg width={20} viewBox="0 0 24 24" aria-hidden="true"><g><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z" fill='currentColor'/></g></svg>

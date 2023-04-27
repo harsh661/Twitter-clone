@@ -16,14 +16,19 @@ module.exports = {
         'grey': '#ececec',
         'accent': '#1d9bf0',
         'dark-gray': '#eff3f4',
-        'gray-text': '#536471'
+        'gray-text': '#536471',
+        'border': '#cfd9de',
       },
       screens: {
         'phone': '500px',
+        'tablet': '690px'
       },
       objectPosition: {
         'unset': 'unset'
-      }
+      },
+      minHeight: {
+        'responsive': '100dvh'
+      },
     },
   },
   plugins: [],

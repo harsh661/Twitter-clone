@@ -1,15 +1,24 @@
-import React from 'react'
+import Link from 'next/link'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import React, { useState } from 'react'
+import Avatar from './Avatar'
 
 const Sidebar = () => {
+    const supabase = useSupabaseClient()
+    const [card, setCard] = useState(false)
+
+    const logOut = async () => {
+        const { error } = await supabase.auth.signOut()
+    }
   return (
-    <div className='flex flex-row justify-around bg-white phone:justify-normal w-full phone:w-min absolute bottom-0 phone:flex-col xl:w-64 h-min phone:h-[100dvh] gap-3 xl:pr-10 p-3 pt-0 phone:relative'>
+    <div className='flex flex-row justify-around bg-white phone:justify-normal w-full phone:w-min absolute bottom-0 phone:flex-col xl:w-64 h-min phone:h-[100dvh] gap-3 xl:pr-10 phone:p-3 phone:pt-0 p-2 phone:relative'>
         <span className='rounded-full hidden phone:flex p-3 hover:bg-grey w-max'>
             <img src="logo.svg" alt="Twitter"/>
         </span>
-        <div className='flex py-2 px-3 w-max rounded-full items-center gap-3 hover:bg-grey cursor-pointer'>
+        <Link href={'/'} className='flex py-2 px-3 w-max rounded-full items-center gap-3 hover:bg-grey cursor-pointer'>
             <svg viewBox="0 0 24 24" aria-hidden="true" className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e" width="26"  height="26" ><g fill="currentColor"><path d="M12 9c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4zm0 6c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2zm0-13.304L.622 8.807l1.06 1.696L3 9.679V19.5C3 20.881 4.119 22 5.5 22h13c1.381 0 2.5-1.119 2.5-2.5V9.679l1.318.824 1.06-1.696L12 1.696zM19 19.5c0 .276-.224.5-.5.5h-13c-.276 0-.5-.224-.5-.5V8.429l7-4.375 7 4.375V19.5z" fill="currentColor"></path></g></svg>
             <span className='text-lg hidden xl:block'>Home</span>
-        </div>
+        </Link>
         <div className='hidden phone:flex py-2 px-3 w-max rounded-full items-center gap-3 hover:bg-grey cursor-pointer'>
             <svg viewBox="0 0 24 24" aria-hidden="true" className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e" width="26"  height="26" ><g fill="currentColor"><path d="M10.09 3.098L9.72 7h5.99l.39-4.089 1.99.187L17.72 7h3.78v2h-3.97l-.56 6h3.53v2h-3.72l-.38 4.089-1.99-.187.36-3.902H8.78l-.38 4.089-1.99-.187L6.77 17H2.5v-2h4.46l.56-6H3.5V7h4.21l.39-4.089 1.99.187zM14.96 15l.56-6H9.53l-.56 6h5.99z" fill="currentColor"></path></g></svg>
             <span className='text-lg hidden xl:block'>Explore</span>
@@ -38,13 +47,14 @@ const Sidebar = () => {
         </button>
 
 
-        <div className='hidden phone:flex items-center justify-between absolute bottom-0 left-0 right-0 rounded-full w-full p-3 xl:p-5 hover:bg-grey'>
-            <span className='flex items-center gap-3'>
-            <img src="https://pbs.twimg.com/profile_images/1605234616033374216/rBeeKbOk_normal.jpg" alt="user" className='w-12 h-12 rounded-full'/>
-            <b className='hidden xl:block'>Harsh Raj</b>
-            </span>
-            <span className='hidden xl:block'>
-                <svg viewBox="0 0 24 24" aria-hidden="true" width="24"  height="24" ><g fill="#0F1419"><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" fill="#0F1419"></path></g></svg>
+        <div className='hidden phone:flex items-center justify-between absolute bottom-0 left-0 right-0 rounded-full w-full p-3 xl:p-3 mb-2 xl:hover:bg-grey'>
+            <Avatar withName={true}/>
+            <span className='hidden xl:block relative cursor-pointer'>
+                <svg onClick={()=>setCard(prev=>!prev)} viewBox="0 0 24 24" aria-hidden="true" width="24"  height="24" ><g fill="#0F1419"><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" fill="#0F1419"></path></g></svg>
+                <div className={`${card ? 'flex': 'hidden'} flex-col absolute w-60 -top-32 right-0 bg-white card gap-2 p-3`}>
+                    <Link href={'/profile'} className='hover:bg-grey py-1 px-2 rounded-md font-semibold'>Profile</Link>
+                    <span onClick={logOut} className='hover:bg-grey py-1 px-2 rounded-md font-semibold'>Log out</span>
+                </div>
             </span>
         </div>
     </div>
