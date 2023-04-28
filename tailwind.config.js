@@ -18,6 +18,12 @@ module.exports = {
         'dark-gray': '#eff3f4',
         'gray-text': '#536471',
         'border': '#cfd9de',
+        'dark-mode': '#000000',
+        'dark-text': '#71767B',
+        'dark-border': '#2f3336',
+        'hover': '#e7e9ea1a',
+        'dark-card': '#16181c',
+        'light-card': '#f7f9f9'
       },
       screens: {
         'phone': '500px',

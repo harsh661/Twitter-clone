@@ -1,30 +1,51 @@
+import React, {useContext, useEffect, useState} from "react";
 import Sidebar from "@/components/Sidebar";
 import Form from "@/components/Form";
 import RightPanel from "@/components/RightPanel";
 import Topbar from "@/components/Topbar";
 import PostCard from "@/components/PostCard";
-import { useSession } from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Login from "./login";
+import { AppContext } from "@/contexts/AppContext";
+import Head from "next/head";
 
 export default function Home() {
+  const {darkMode} = useContext(AppContext)
+  const [posts, setPosts] = useState([])
+  const supabase = useSupabaseClient()
   const session = useSession()
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+
+  const fetchPosts = () => {
+    supabase.from('posts')
+      .select('id, content, created_at, profiles(id, avatar, name)')
+      .order('created_at', {ascending: false})
+      .then(res => {
+        setPosts(res.data)
+      })
+  }
+
   if(!session) {
     return <Login />
   }
 
   return (
-    <main className="flex justify-center mx-auto">
-        <Sidebar />
-        <section className="flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col border-x">
-          <Topbar />
-          <Form />
+    <main className={`${darkMode && 'bg-black text-white'} flex justify-center mx-auto`}>
+        <Sidebar darkMode={darkMode}/>
+        <section className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col border-x ${darkMode && 'border-dark-border'}`}>
+          <Topbar darkMode={darkMode}/>
+          <Form onPost={fetchPosts} darkMode={darkMode}/>
           {/* Posts */}
-          <div className="flex flex-col px-3">
-            <PostCard />
-            <PostCard />
+          <div className="flex flex-col">
+            {posts?.length && posts.map(post => (
+              <PostCard key={post.id} {...post} darkMode={darkMode}/>
+            ))}
           </div>
         </section>
-        <RightPanel />
+        <RightPanel darkMode={darkMode}/>
     </main>
   )
 }

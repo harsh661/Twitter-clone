@@ -9,6 +9,16 @@
         -moz-box-shadow: 0px 0px 18px -1px rgba(0,0,0,0.6);
         box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
     }
+    .card-light {
+      border-radius: 8px;
+      -webkit-box-shadow: 0px 0px 18px -1px rgba(255, 255, 255, 0.6);
+      -moz-box-shadow: 0px 0px 18px -1px rgba(255, 255, 255, 0.6);
+      box-shadow: 0px 0px 15px -1px rgba(255, 255, 255, 0.5);
+  }
+}
+
+body {
+  font-size: 15px;
 }
 
  /* Hide scrollbar for Chrome, Safari and Opera */

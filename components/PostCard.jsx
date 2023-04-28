@@ -1,20 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Avatar from './Avatar'
+import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en.json'
+import Loader from './Loader'
 
-const PostCard = () => {
+TimeAgo.locale(en)
+
+const PostCard = ({content, created_at, id, profiles:profile, darkMode}) => {
+
+  if(!content) return <Loader />
   return (
-    <div className='flex border-b py-3'>
-        <Avatar />
-        <main className='flex w-full flex-col px-3 py-1'>
+    <div className={`flex border-b p-3 ${darkMode && 'border-dark-border'}`}>
+        <Avatar url={profile?.avatar}/>
+        <main className='flex w-full flex-col px-3'>
             <div className='flex items-center gap-3'>
-                <h2 className='font-bold'>Harsh Raj</h2>
-                <p className='text-gray-500'>14h</p>
+                <h2 className='font-bold'>{profile?.name}</h2>
+                {created_at &&
+                    <p className='text-gray-500'>
+                        <ReactTimeAgo date={created_at} locale='en' timeStyle='twitter'/>
+                    </p>
+                }
             </div>
-            <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem facilis nostrum aspernatur, iste ut molestiae laboriosam.
-            </p>
-            <img src="https://pbs.twimg.com/media/Ft8PGAPX0AMVT_s?format=jpg&name=small" alt="post" className='w-full rounded-2xl border my-3'/>
-            <div className='flex items-center gap-10 text-sm text-gray-500'>
+            <div className='flex flex-col'>
+                <p>
+                    {content}
+                </p>
+                {/* <img src={''} alt="post" className='w-full rounded-2xl border my-3'/> */}
+            </div>
+            <div className='flex pt-3 items-center gap-10 text-sm text-gray-500'>
                 <span className='flex items-center gap-2'>
                     <svg width={20} viewBox="0 0 24 24" aria-hidden="true"><g><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z" fill='currentColor'/></g></svg>
                     20

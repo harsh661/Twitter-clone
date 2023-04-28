@@ -1,11 +1,11 @@
 import React from 'react'
 import Avatar from './Avatar'
 
-const UserCard = () => {
+const UserCard = ({darkMode}) => {
   return (
-    <div className='flex justify-between items-center'>
+    <div className={`flex justify-between items-center ${darkMode&&'text-white'}`}>
         <Avatar withName={true}/>
-        <button className='px-5 py-2 bg-black text-white rounded-full text-sm font-bold'>Follow</button>
+        <button className={`${darkMode?'bg-white text-black': 'bg-black text-white'} px-5 py-2 rounded-full text-sm font-bold`}>Follow</button>
     </div>
   )
 }

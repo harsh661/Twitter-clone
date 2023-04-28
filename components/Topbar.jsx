@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Avatar from './Avatar'
+import { UserContext } from '@/contexts/UserContext'
+import { AppContext } from '@/contexts/AppContext'
 
 const Topbar = () => {
+  const {darkMode} = useContext(AppContext)
+  const {user} = useContext(UserContext)
   return (
-    <div className="flex flex-col sticky top-0 bg-white text-sm text-gray-text border-b">
-        <h2 className="font-bold text-black hidden phone:block text-xl p-3">Home</h2>
+    <div className={`${darkMode && 'bg-black text-white border-dark-border'} flex flex-col sticky top-0 text-sm text-gray-text border-b`}>
+        <h2 className="font-bold hidden phone:block text-xl p-3">Home</h2>
         <div className='grid grid-cols-3 w-full phone:hidden p-3'>
-          <Avatar />
+          <Avatar url={user?.avatar} size={8}/>
           <img src="logo.svg" alt="logo" width={25} className='justify-self-center'/>
         </div>
         <div className="flex w-full">
