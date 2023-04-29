@@ -18,7 +18,7 @@ const PostCard = ({content, created_at, id, profiles:profile, darkMode}) => {
                 <h2 className='font-bold'>{profile?.name}</h2>
                 {created_at &&
                     <p className='text-gray-500'>
-                        <ReactTimeAgo date={created_at} locale='en' timeStyle='twitter'/>
+                        {/* <ReactTimeAgo date={created_at} locale='en' timeStyle='twitter'/> */}
                     </p>
                 }
             </div>
@@ -26,7 +26,8 @@ const PostCard = ({content, created_at, id, profiles:profile, darkMode}) => {
                 <p>
                     {content}
                 </p>
-                {/* <img src={''} alt="post" className='w-full rounded-2xl border my-3'/> */}
+                <img src={'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg'} 
+                alt="post" className={`w-full rounded-2xl border my-3 ${darkMode && 'border-dark-border'}`}/>
             </div>
             <div className='flex pt-3 items-center gap-10 text-sm text-gray-500'>
                 <span className='flex items-center gap-2'>

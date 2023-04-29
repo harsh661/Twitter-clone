@@ -8,6 +8,7 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Login from "./login";
 import { AppContext } from "@/contexts/AppContext";
 import Head from "next/head";
+import Loader from "@/components/Loader";
 
 export default function Home() {
   const {darkMode} = useContext(AppContext)
@@ -37,12 +38,12 @@ export default function Home() {
         <Sidebar darkMode={darkMode}/>
         <section className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col border-x ${darkMode && 'border-dark-border'}`}>
           <Topbar darkMode={darkMode}/>
-          <Form onPost={fetchPosts} darkMode={darkMode}/>
+          {session.user && <Form onPost={fetchPosts} darkMode={darkMode}/>}
           {/* Posts */}
           <div className="flex flex-col">
-            {posts?.length && posts.map(post => (
+            {posts?.length ? posts.map(post => (
               <PostCard key={post.id} {...post} darkMode={darkMode}/>
-            ))}
+            )) : <Loader />}
           </div>
         </section>
         <RightPanel darkMode={darkMode}/>
