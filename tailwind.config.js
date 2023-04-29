@@ -25,7 +25,9 @@ module.exports = {
         'dark-border': '#2f3336',
         'hover': '#e7e9ea1a',
         'dark-card': '#16181c',
-        'light-card': '#f7f9f9'
+        'light-card': '#f7f9f9',
+        'blue-hover': '#1d9bf01a',
+        'red-hover': '#f918801a'
       },
       screens: {
         'phone': '500px',

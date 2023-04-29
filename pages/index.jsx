@@ -22,10 +22,11 @@ export default function Home() {
 
   const fetchPosts = () => {
     supabase.from('posts')
-      .select('id, content, created_at, profiles(id, avatar, name)')
+      .select('id, content, file, created_at, profiles(id, avatar, name)')
       .order('created_at', {ascending: false})
       .then(res => {
         setPosts(res.data)
+        console.log(session)
       })
   }
 
@@ -38,7 +39,7 @@ export default function Home() {
         <Sidebar darkMode={darkMode}/>
         <section className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col border-x ${darkMode && 'border-dark-border'}`}>
           <Topbar darkMode={darkMode}/>
-          {session.user && <Form onPost={fetchPosts} darkMode={darkMode}/>}
+          {session && <Form onPost={fetchPosts} darkMode={darkMode}/>}
           {/* Posts */}
           <div className="flex flex-col">
             {posts?.length ? posts.map(post => (
