@@ -7,7 +7,6 @@ import PostCard from "@/components/PostCard";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Login from "./login";
 import { AppContext } from "@/contexts/AppContext";
-import Head from "next/head";
 import Loader from "@/components/Loader";
 
 export default function Home() {
@@ -26,7 +25,6 @@ export default function Home() {
       .order('created_at', {ascending: false})
       .then(res => {
         setPosts(res.data)
-        console.log(session)
       })
   }
 

@@ -1,29 +1,31 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
-import Avatar from './Avatar'
 import ReactTimeAgo from 'react-time-ago'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
 import Loader from './Loader'
-
 TimeAgo.locale(en)
 
 const PostCard = ({content, file, created_at, id, profiles:profile, darkMode}) => {
 
   if(!content) return <Loader />
+
   return (
     <div className={`flex border-b p-3 ${darkMode && 'border-dark-border'}`}>
         <Link href={`/profile/${profile.id}`} className='w-12 h-12 rounded-full'>
             <img src={profile?.avatar} alt={profile?.name} className='w-full h-full rounded-full'/>
         </Link>
         <main className='flex flex-1 flex-col px-3'>
-            <div className='flex items-center gap-3'>
-                <h2 className='font-bold'>{profile?.name}</h2>
-                {created_at &&
+            <div className='flex items-center justify-between'>
+                <span className='flex gap-3 items-center'>
+                    <h2 className='font-bold'>{profile?.name}</h2>
                     <p className='text-gray-500'>
                         <ReactTimeAgo date={new Date(created_at)} locale='en-US' timeStyle='twitter'/>
                     </p>
-                }
+                </span>
+                <span className='cursor-pointer'>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" width="20"  height="20" ><g fill="currentColor"><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" fill="currentColor"></path></g></svg>
+                </span>
             </div>
             <div className='flex flex-col'>
                 <p>

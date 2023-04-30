@@ -3,14 +3,15 @@ import { useSupabaseClient, useSession } from '@supabase/auth-helpers-react'
 import React, { useContext, useEffect, useState } from 'react'
 import Avatar from './Avatar'
 import { UserContext } from '@/contexts/UserContext'
-import Loader from './Loader'
 import { AppContext } from '@/contexts/AppContext'
+import Compose from './compose'
 
 const Sidebar = () => {
     const {darkMode, setDarkMode} = useContext(AppContext)
     const {setUser, user} = useContext(UserContext)
     const supabase = useSupabaseClient()
     const [card, setCard] = useState(false)
+    const [form, setForm] = useState(false)
     const session = useSession()
     
     useEffect(() => {
@@ -28,6 +29,8 @@ const Sidebar = () => {
         const { error } = await supabase.auth.signOut()
     }
   return (
+    <>
+    {form && <Compose setForm={setForm}/>}
     <div className={`${darkMode ? 'bg-dark-mode text-white': 'bg-white'} flex flex-row justify-around phone:justify-normal w-full phone:w-min absolute bottom-0 phone:flex-col xl:w-64 h-min phone:h-[100dvh] gap-3 xl:pr-10 phone:p-3 phone:pt-0 p-2 phone:relative`}>
         <span className={`rounded-full hidden phone:flex p-3 ${darkMode ? 'hover:bg-hover text-white':'hover:bg-grey text-accent'} w-max`}>
             <svg viewBox="0 0 24 24" aria-hidden="true" width="30"  height="30" ><g fill="currentColor"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z" fill="currentColor"></path></g></svg>
@@ -52,16 +55,16 @@ const Sidebar = () => {
         <svg viewBox="0 0 24 24" aria-hidden="true" className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e" width="26"  height="26" ><g fill="currentColor"><path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z" fill="currentColor"></path></g></svg>
             <span className='text-lg hidden xl:block'>Bookmarks</span>
         </div>
-        <Link href='/profile' className={`flex py-2 px-3 w-max rounded-full items-center gap-3 ${darkMode ? 'hover:bg-hover':'hover:bg-grey'} cursor-pointer`}>
+        <Link href={`/profile/${user?.id}`} className={`flex py-2 px-3 w-max rounded-full items-center gap-3 ${darkMode ? 'hover:bg-hover':'hover:bg-grey'} cursor-pointer`}>
             <svg viewBox="0 0 24 24" aria-hidden="true" className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e" width="26"  height="26" ><g fill="currentColor"><path d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z" fill="currentColor"></path></g></svg>
             <span className='text-lg hidden xl:block'>Profile</span>
         </Link>
-        <button className='p-3 absolute right-5 bottom-20 phone:static my-2 w-max xl:w-full rounded-full bg-accent font-bold text-white'>
+        <span onClick={()=>setForm(true)} className='p-3 flex items-center justify-center absolute right-5 bottom-20 phone:static my-2 w-max xl:w-full rounded-full bg-accent font-bold text-white'>
             <span className='hidden xl:block'>Tweet</span>
             <span className='xl:hidden'>
                 <svg viewBox="0 0 24 24" aria-hidden="true" className="r-jwli3a r-4qtqp9 r-yyyyoo r-1472mwg r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-lrsllp" width="24"  height="24" ><g fill="#FFFFFF"><path d="M23 3c-6.62-.1-10.38 2.421-13.05 6.03C7.29 12.61 6 17.331 6 22h2c0-1.007.07-2.012.19-3H12c4.1 0 7.48-3.082 7.94-7.054C22.79 10.147 23.17 6.359 23 3zm-7 8h-1.5v2H16c.63-.016 1.2-.08 1.72-.188C16.95 15.24 14.68 17 12 17H8.55c.57-2.512 1.57-4.851 3-6.78 2.16-2.912 5.29-4.911 9.45-5.187C20.95 8.079 19.9 11 16 11zM4 9V6H1V4h3V1h2v3h3v2H6v3H4z" fill="#FFFFFF"></path></g></svg>
             </span>
-        </button>
+        </span>
 
 
         <div className='hidden phone:flex absolute bottom-0 xl:left-0 right-2 mb-2'>
@@ -73,8 +76,8 @@ const Sidebar = () => {
                 <span className='hidden xl:block cursor-pointer'>
                     <svg onClick={()=>setCard(prev=>!prev)} viewBox="0 0 24 24" aria-hidden="true" width="24"  height="24" ><g fill="currentColor"><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" fill="currentColor"></path></g></svg>
                 </span>
-                <div className={`${card ? 'flex': 'hidden'} ${darkMode ? 'card-light bg-dark-mode text-white': 'card'} flex-col absolute w-60 -top-48 left-3 gap-2 p-3`}>
-                    <Link href={'/profile'} className={`${darkMode ? 'hover:bg-hover':'hover:bg-grey'} py-1 px-2 rounded-md font-semibold`}>Profile</Link>
+                <div className={`${card ? 'flex': 'hidden'} ${darkMode ? 'card-light bg-dark-mode text-white': 'bg-white card'} flex-col absolute w-60 -top-48 left-3 gap-2 p-3`}>
+                    <Link href={`/profile/${user?.id}`} className={`${darkMode ? 'hover:bg-hover':'hover:bg-grey'} py-1 px-2 rounded-md font-semibold`}>Profile</Link>
                     <span onClick={logOut} className={`${darkMode ? 'hover:bg-hover':'hover:bg-grey'} py-1 px-2 rounded-md font-semibold`}>Log out</span>
                     <label htmlFor="theme" className='flex items-center gap-3 font-semibold'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
@@ -90,6 +93,7 @@ const Sidebar = () => {
             </div>
         </div>
     </div>
+    </>
   )
 }
 

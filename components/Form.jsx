@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Avatar from './Avatar'
 import { UserContext } from '@/contexts/UserContext'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
@@ -36,20 +36,6 @@ const Form = ({onPost, darkMode}) => {
         setFile(reader.result);
       };
     }
-    
-    // const files = e.target.files
-    // for(const file of files) {
-    //   const filename = Date.now() + file.name
-    //   supabase.storage.from('photos')
-    //     .upload(filename, file)
-    //     .then(response => {
-    //       if(response.data){
-    //         console.log({
-    //           url: process.env.NEXT_PUBLIC_SUPABASE_URL + '/v1/object/public/photos/' + response.data.path
-    //         })
-    //       }
-    //     })
-    // }
   }
 
   return (
@@ -69,7 +55,9 @@ const Form = ({onPost, darkMode}) => {
             }
             <div className='px-3 flex items-center justify-between'>
                 <label htmlFor='file' className='w-8 h-8 p-1 rounded-full hover:bg-blue-hover'>
-                  <svg viewBox="0 0 24 24" aria-hidden="true" width="24"  height="24" ><g fill="#1D9BF0"><path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z" fill="#1D9BF0"></path></g></svg>
+                  <svg viewBox="0 0 24 24" aria-hidden="true" width="24"  height="24" ><g fill="#1D9BF0">
+                    <path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z" fill="#1D9BF0"></path></g>
+                  </svg>
                 </label>
                 <input onChange={uploadPhoto} id='file' type="file" className='hidden'/>
                 <button disabled={content == ''} onClick={createPost} className='py-2 px-5 disabled:bg-[#8dccf7] text-sm my-2 w-max rounded-full bg-accent font-bold text-white'>
