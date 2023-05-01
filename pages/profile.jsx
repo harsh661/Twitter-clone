@@ -32,7 +32,6 @@ const Profile = () => {
       .eq("id", userId)
       .then((res) => {
         setProfile(res.data)
-        console.log(res.data)
       })
   }
 
