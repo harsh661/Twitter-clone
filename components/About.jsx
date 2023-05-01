@@ -14,7 +14,7 @@ const About = ({darkMode, isUser, user, fetchUser}) => {
   return (
     <>
     {showEdit && <EditForm onChange={fetchUser} user={user} setShowEdit={setShowEdit}/>}
-    <div className={`flex flex-col relative pb-10 border-b ${darkMode && 'border-dark-border'}`}>
+    <div className='flex flex-col relative pb-10'>
 
       {/* Top Bar */}
       <div className={`flex items-center w-full ${darkMode && 'bg-black text-white'} p-1 gap-8 sticky top-0 z-10`}>
@@ -34,7 +34,7 @@ const About = ({darkMode, isUser, user, fetchUser}) => {
 
       {/* Profile picture */}
       <div className='flex w-full px-3 pt-3 pb-10 justify-end relative'>
-        <img src={user.avatar} alt={user?.name} className={`w-36 h-36 rounded-full absolute border-4 ${darkMode ? 'border-black': 'border-white'} -translate-y-20 left-3`}/>
+        <img src={user?.avatar} alt={user?.name} referrerPolicy="no-referrer" className={`w-36 h-36 object-cover flex items-center justify-center rounded-full absolute border-4 ${darkMode ? 'border-black': 'border-white'} -translate-y-20 left-3`}/>
         {isUser 
           ?<button onClick={() => setShowEdit(true)} className={`px-5 py-2 border ${darkMode?'border-dark-border text-white':'text-black border-black'} rounded-full text-sm font-bold`}>Edit Profile</button>
           :<button className='px-5 py-2 bg-black text-white rounded-full text-sm font-bold'>Follow</button>

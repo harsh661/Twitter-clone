@@ -39,7 +39,7 @@ const Form = ({onPost, darkMode}) => {
   }
 
   return (
-    <div className={`${!user && 'hidden'} hidden phone:flex gap-3 p-3 border-b ${darkMode && 'border-dark-border'}`}>
+    <div className={`${!user && 'hidden'} hidden phone:flex gap-3 p-3 `}>
         <Avatar url={user?.avatar}/>
         <form onSubmit={e=>e.preventDefault()} className='flex flex-col w-full'>
             <textarea value={content} onChange={e => setContent(e.target.value)} name="post" id="post" className='outline-none bg-transparent p-2 w-full resize-y text-xl' placeholder="What's Happening?" />

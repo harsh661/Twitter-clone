@@ -39,6 +39,15 @@ module.exports = {
       minHeight: {
         'responsive': '100dvh'
       },
+      animation: {
+        'slidein': 'slide 200ms linear'
+      },
+      keyframes: {
+        'slide': {
+          '0%': {'transform': 'translateX(-288px)'},
+          '100%': {'transform': 'translateX(0px)'}
+        }
+      }
     },
   },
   plugins: [],

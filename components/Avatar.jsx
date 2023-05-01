@@ -1,18 +1,15 @@
 import React from 'react'
 
-const Avatar = ({url, size}) => {
+const Avatar = ({url}) => {
   return (
     url ?
       <img 
         src={url} 
         alt='user' 
-        className={`object-cover rounded-full ${!size && 'w-12 h-12'}`} 
-        width={size} 
-        height={size}
+        referrerPolicy='no-referrer'
+        className={`object-cover rounded-full w-12 h-12 flex items-center justify-center`} 
       />
-      : <div className={`bg-grey rounded-full ${!size && 'w-12 h-12'}`} 
-            width={size} 
-            height={size}
+      : <div className={`bg-grey rounded-full w-12 h-12`} 
         />
   )
 }

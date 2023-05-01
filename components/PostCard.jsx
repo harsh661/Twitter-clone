@@ -3,22 +3,21 @@ import Link from 'next/link'
 import ReactTimeAgo from 'react-time-ago'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
-import Loader from './Loader'
 TimeAgo.locale(en)
 
 const PostCard = ({content, file, created_at, id, profiles:profile, darkMode}) => {
 
-  if(!content) return <Loader />
+  if(!content || !profile) return
 
   return (
     <div className={`flex border-b p-3 ${darkMode && 'border-dark-border'}`}>
         <Link href={`/profile/${profile.id}`} className='w-12 h-12 rounded-full'>
-            <img src={profile?.avatar} alt={profile?.name} className='w-full h-full rounded-full'/>
+            <img src={profile.avatar} alt={profile.name} referrerPolicy="no-referrer" className='w-full h-full object-cover rounded-full'/>
         </Link>
         <main className='flex flex-1 flex-col px-3'>
             <div className='flex items-center justify-between'>
                 <span className='flex gap-3 items-center'>
-                    <h2 className='font-bold'>{profile?.name}</h2>
+                    <h2 className='font-bold'>{profile.name}</h2>
                     <p className='text-gray-500'>
                         <ReactTimeAgo date={new Date(created_at)} locale='en-US' timeStyle='twitter'/>
                     </p>

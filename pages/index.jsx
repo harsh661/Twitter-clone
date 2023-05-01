@@ -37,9 +37,9 @@ export default function Home() {
         <Sidebar darkMode={darkMode}/>
         <section className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col border-x ${darkMode && 'border-dark-border'}`}>
           <Topbar darkMode={darkMode}/>
-          {session && <Form onPost={fetchPosts} darkMode={darkMode}/>}
+          {session.user && <Form onPost={fetchPosts} darkMode={darkMode}/>}
           {/* Posts */}
-          <div className="flex flex-col">
+          <div className={`flex pb-20 flex-col border-t ${darkMode && 'border-dark-border'}`}>
             {posts?.length ? posts.map(post => (
               <PostCard key={post.id} {...post} darkMode={darkMode}/>
             )) : <Loader />}

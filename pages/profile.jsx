@@ -11,30 +11,44 @@ import Loader from "@/components/Loader";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
-  const router = useRouter();
-  const userId = router.query.id;
-  const { darkMode } = useContext(AppContext);
-  const supabase = useSupabaseClient();
-  const session = useSession();
+  const [userPosts, setUserPosts] = useState(null)
+  const router = useRouter()
+  const userId = router.query.id
+  const { darkMode } = useContext(AppContext)
+  const supabase = useSupabaseClient()
+  const session = useSession()
 
   useEffect(() => {
-    fetchUser();
-  }, [userId]);
+    fetchUser()
+    fetchUserPosts()
+  }, [userId])
 
   const fetchUser = () => {
-    if (!userId) return;
+    if (!userId) return
     supabase
       .from("profiles")
       .select()
       .eq("id", userId)
       .then((res) => {
-        setProfile(res.data);
-      });
-  };
+        setProfile(res.data)
+        console.log(res.data)
+      })
+  }
 
-  if (!session) return <Login />;
+  const fetchUserPosts = () => {
+    if(!userId) return
+    supabase.from('posts')
+      .select('id, content, file, created_at, profiles(id, avatar, name)')
+      .eq("author", userId)
+      .order('created_at', {ascending: false})
+      .then(res => {
+        setUserPosts(res.data)
+      })
+  }
 
-  if (!profile) return <Loader />;
+  if (!session) return <Login />
+
+  const active = 'font-bold text-black'
 
   return (
     <main
@@ -43,18 +57,38 @@ const Profile = () => {
       } flex justify-center mx-auto`}
     >
       <Sidebar darkMode={darkMode} />
-      <section
-        className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col border-x ${
-          darkMode && "border-dark-border"
-        }`}
-      >
+      <section className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col border-x ${darkMode && "border-dark-border"}`}>
+
+      {
+      profile ?
         <About
           user={profile[0]}
           isUser={userId === session.user.id}
           darkMode={darkMode}
           fetchUser={fetchUser}
         />
-        <div className="flex flex-col px-3"></div>
+        : <Loader />
+      }
+
+      {/* Tabs for tweets and likes */}
+          <div className={`flex w-full cursor-pointer border-b ${darkMode && 'border-dark-border'}`}>
+            <div className={`flex-1 py-3 relative flex items-center justify-center ${darkMode?'hover:bg-hover text-white': 'hover:bg-grey'} ${active}`}>
+              <span>Tweets</span>
+              <span className='bg-accent h-1 w-14 absolute bottom-0'></span>
+            </div>
+            <div className={`${darkMode?'hover:bg-hover text-white': 'hover:bg-grey'} flex-1 py-3 relative flex items-center justify-center hover:bg-grey`}>
+              <span>Likes</span>
+              {/* <span className='bg-accent h-1 w-14 absolute bottom-0'></span> */}
+            </div>
+          </div>
+
+      {/* Display Posts*/}
+        <div className="flex flex-col">
+            {userPosts?.length ? userPosts.map(post => (
+              <PostCard key={post.id} {...post} darkMode={darkMode}/>
+            )) : <Loader />}
+        </div>
+
       </section>
       <RightPanel darkMode={darkMode} />
     </main>
