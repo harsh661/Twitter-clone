@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext, useState } from 'react'
 import Link from 'next/link'
 import { UserContext } from '@/contexts/UserContext'

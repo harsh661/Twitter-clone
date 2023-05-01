@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useContext, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import RightPanel from "@/components/RightPanel";

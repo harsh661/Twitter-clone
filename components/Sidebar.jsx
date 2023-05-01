@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
 import { useSupabaseClient, useSession } from '@supabase/auth-helpers-react'
 import React, { useContext, useEffect, useState } from 'react'
-import Avatar from './Avatar'
 import { UserContext } from '@/contexts/UserContext'
 import { AppContext } from '@/contexts/AppContext'
 import Compose from './compose'

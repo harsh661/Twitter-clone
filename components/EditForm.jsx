@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { AppContext } from '@/contexts/AppContext'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import React, { useContext, useEffect, useState } from 'react'

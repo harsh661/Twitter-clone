@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext, useState } from 'react'
 import Avatar from './Avatar'
 import { UserContext } from '@/contexts/UserContext'
