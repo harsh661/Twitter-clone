@@ -21,7 +21,7 @@ const Profile = () => {
   useEffect(() => {
     fetchUser()
     fetchUserPosts()
-  }, [userId])
+  }, [userId]) // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const fetchUser = () => {
     if (!userId) return

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import Sidebar from "@/components/Sidebar";
 import Form from "@/components/Form";
 import RightPanel from "@/components/RightPanel";
@@ -17,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchPosts()
-  }, [])
+  }, []) // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const fetchPosts = () => {
     supabase.from('posts')

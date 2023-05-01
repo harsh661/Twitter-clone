@@ -23,7 +23,7 @@ const Sidebar = () => {
           setUser(result.data[0])
         }
       })
-    }, [])
+    }, []) // eslint-disable-next-line react-hooks/exhaustive-deps
     
     const logOut = async () => {
         const { error } = await supabase.auth.signOut()
