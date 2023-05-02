@@ -29,15 +29,15 @@ const About = ({darkMode, isUser, user, fetchUser}) => {
       </div>
 
       {/* cover image */}
-      <div className='h-52 w-full bg-grey'>
-        {user.cover && <img src={user.cover} alt='Cover Image' className='w-full h-52 object-cover'/>}
+      <div className='phone:h-52 h-36 w-full bg-grey'>
+        {user.cover && <img src={user.cover} alt='Cover Image' className='w-full phone:h-52 h-36 object-cover'/>}
       </div>
 
       {/* Profile picture */}
-      <div className='flex w-full px-3 pt-3 pb-10 justify-end relative'>
-        <img src={user?.avatar} alt={user?.name} referrerPolicy="no-referrer" className={`w-36 h-36 object-cover flex items-center justify-center rounded-full absolute border-4 ${darkMode ? 'border-black': 'border-white'} -translate-y-20 left-3`}/>
+      <div className='flex w-full px-3 pt-3 phone:pb-10 pb-3 justify-end relative'>
+        <img src={user?.avatar} alt={user?.name} referrerPolicy="no-referrer" className={`phone:w-36 phone:h-36 w-20 h-20 object-cover flex items-center justify-center rounded-full absolute border-2 phone:border-4 ${darkMode ? 'border-black': 'border-white'} phone:-translate-y-20 -translate-y-12 left-3`}/>
         {isUser 
-          ?<button onClick={() => setShowEdit(true)} className={`px-5 py-2 border ${darkMode?'border-dark-border text-white':'text-black border-black'} rounded-full text-sm font-bold`}>Edit Profile</button>
+          ?<button onClick={() => setShowEdit(true)} className={`px-5 py-1 border ${darkMode?'border-dark-border text-white':'text-black border-black'} rounded-full text-sm font-bold`}>Edit Profile</button>
           :<button className='px-5 py-2 bg-black text-white rounded-full text-sm font-bold'>Follow</button>
         }
       </div>

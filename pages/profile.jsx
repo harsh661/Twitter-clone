@@ -57,7 +57,7 @@ const Profile = () => {
       } flex justify-center mx-auto`}
     >
       <Sidebar darkMode={darkMode} />
-      <section className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col border-x ${darkMode && "border-dark-border"}`}>
+      <section className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col phone:border-x ${darkMode && "border-dark-border"}`}>
 
       {
       profile ?
@@ -78,17 +78,17 @@ const Profile = () => {
             </div>
             <div className={`${darkMode?'hover:bg-hover text-white': 'hover:bg-grey'} flex-1 py-3 relative flex items-center justify-center hover:bg-grey`}>
               <span>Likes</span>
-              {/* <span className='bg-accent h-1 w-14 absolute bottom-0'></span> */}
             </div>
           </div>
 
       {/* Display Posts*/}
+      {userPosts &&
         <div className="flex flex-col">
-            {userPosts?.length ? userPosts.map(post => (
+            {userPosts.map(post => (
               <PostCard key={post.id} {...post} darkMode={darkMode}/>
-            )) : <Loader />}
+            ))}
         </div>
-
+      }
       </section>
       <RightPanel darkMode={darkMode} />
     </main>

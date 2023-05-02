@@ -105,7 +105,7 @@ const EditForm = ({setShowEdit, user, onChange}) => {
               </div>
             </div>
 
-            <button onClick={updateImages} className='p-2 border-black absolute right-5 bottom-5 bg-white font-bold rounded-full'>Upload images</button>
+            <button onClick={updateImages} className='p-2 border-black absolute right-5 bottom-5 bg-white text-black font-bold rounded-full'>Upload images</button>
 
           </div>
           

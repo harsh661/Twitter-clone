@@ -2,10 +2,10 @@ import { AppContext } from '@/contexts/AppContext'
 import React, { useContext } from 'react'
 import Form from './Form'
 
-const Compose = ({setForm}) => {
+const Compose = ({setForm, onPost}) => {
   const {darkMode} = useContext(AppContext)
   return (
-    <section className='flex items-start pt-10 backdrop-brightness-50 justify-center min-h-responsive z-50 absolute left-0 right-0'>
+    <section className='flex items-start backdrop-brightness-50 justify-center min-h-responsive z-50 absolute left-0 right-0'>
       <main className={`${darkMode ? 'bg-black text-white card-light': 'bg-white card'} relative flex flex-col w-full min-h-responsive tablet:w-[600px] tablet:min-h-min tablet:rounded-2xl`}>
           <header className='flex items-center justify-between p-3'>
               <span onClick={()=>setForm(false)} className='cursor-pointer flex items-center gap-5'>
@@ -14,7 +14,7 @@ const Compose = ({setForm}) => {
                 </svg>
               </span>
           </header>
-          <Form />
+          <Form onPost={onPost} setForm={setForm}/>
       </main>
     </section>
   )

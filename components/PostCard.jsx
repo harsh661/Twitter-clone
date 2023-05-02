@@ -11,11 +11,11 @@ const PostCard = ({content, file, created_at, id, profiles:profile, darkMode}) =
   if(!content || !profile) return
 
   return (
-    <div className={`flex border-b p-3 ${darkMode && 'border-dark-border'}`}>
-        <Link href={`/profile/${profile.id}`} className='w-12 h-12 rounded-full'>
+    <div className={`flex gap-3 border-b p-3 ${darkMode && 'border-dark-border'}`}>
+        <Link href={`/profile/${profile.id}`} className='phone:w-12 phone:h-12 w-10 h-10 rounded-full'>
             <img src={profile.avatar} alt={profile.name} referrerPolicy="no-referrer" className='w-full h-full object-cover rounded-full'/>
         </Link>
-        <main className='flex flex-1 flex-col px-3'>
+        <main className='flex flex-1 flex-col phone:pr-3'>
             <div className='flex items-center justify-between'>
                 <span className='flex gap-3 items-center'>
                     <h2 className='font-bold'>{profile.name}</h2>
@@ -31,10 +31,10 @@ const PostCard = ({content, file, created_at, id, profiles:profile, darkMode}) =
                 <p>
                     {content}
                 </p>
-                {file !== null && <img src={file} 
+                {file && <img src={file} 
                 alt="post" className={`w-full rounded-2xl border my-3 ${darkMode && 'border-dark-border'}`}/>}
             </div>
-            <div className='flex pt-3 items-center gap-10 text-sm text-gray-500'>
+            <div className='flex pt-2 items-center gap-10 text-sm text-gray-500'>
                 <span className='flex items-center gap-2 hover:text-blue-500 cursor-pointer'>
                     <svg width={20} viewBox="0 0 24 24" aria-hidden="true"><g><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z" fill='currentColor'/></g></svg>
                     20

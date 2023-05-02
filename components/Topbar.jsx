@@ -4,21 +4,28 @@ import Link from 'next/link'
 import { UserContext } from '@/contexts/UserContext'
 import { AppContext } from '@/contexts/AppContext'
 
-const Topbar = () => {
+const Topbar = ({setFixed}) => {
   const {darkMode, setDarkMode} = useContext(AppContext)
   const {user} = useContext(UserContext)
   const [nav, setNav] = useState(false)
-
   const active = 'font-bold text-black'
   const navItem = `flex py-2 px-3 w-full items-center gap-5 ${darkMode ? 'hover:bg-hover':'hover:bg-grey'} cursor-pointer`
+
+  if(nav) {
+    setFixed(true)
+  } else {
+    setFixed(false)
+  }
 
   return (
     <>
     <div className={`${darkMode ? 'blurred-dark text-white border-dark-border': 'blurred'} flex flex-col sticky top-0 text-sm text-gray-text border-b`}>
         <h2 className="font-bold hidden phone:block text-xl p-3">Home</h2>
         <div className='grid grid-cols-3 w-full phone:hidden p-3'>
-          <img onClick={()=>setNav(true)} src={user?.avatar} alt={user?.name} className='w-8 h-8 rounded-full object-cover'/>
-          <img src="favicon.ico" alt="logo" width={25} className='justify-self-center'/>
+          <img onClick={()=>setNav(true)} src={user?.avatar} alt={user?.name} className='phone:w-8 phone:h-8 w-6 h-6 rounded-full object-cover'/>
+          <span className='justify-self-center'>
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="25"  height="25" ><g fill="#1d9bf0"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z" fill="#1d9bf0"></path></g></svg>
+          </span>
         </div>
         <div className="flex w-full cursor-pointer">
           <div className={`flex-1 py-3 relative flex items-center justify-center ${darkMode?'hover:bg-hover text-white': 'hover:bg-grey'} ${active}`}>
@@ -36,7 +43,7 @@ const Topbar = () => {
     {nav && 
       <>
         <div onClick={()=>setNav(false)} className='bg-black/70 phone:hidden w-screen min-h-responsive absolute'/>
-        <div className={`${darkMode?'bg-dark-mode text-white':'bg-white'} animate-slidein min-h-responsive absolute left-0 flex phone:hidden flex-col w-72 z-50`}>
+        <div className={`${darkMode?'bg-dark-mode text-white':'bg-white'} animate-slidein min-h-responsive absolute left-0 flex phone:hidden p-3 pt-0 flex-col w-72 z-50`}>
 
           <div className='flex items-center justify-between p-3'>
             <span className='font-bold text-lg'>Account info</span>
@@ -75,7 +82,7 @@ const Topbar = () => {
                   <span className='text-xl font-medium'>Messages</span>
               </div>
           </div>
-          <span onClick={()=>setDarkMode(prev=>!prev)} className='p-3 absolute left-0 bottom-0'>
+          <span onClick={()=>setDarkMode(prev=>!prev)} className='p-6 absolute left-0 bottom-0'>
             {darkMode
                 ?<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
