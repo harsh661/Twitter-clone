@@ -84,7 +84,7 @@ const Profile = () => {
 
       {/* Display Posts*/}
       {userPosts &&
-        <div className="flex flex-col">
+        <div className="flex flex-col pb-20">
             {userPosts.map(post => (
               <PostCard key={post.id} {...post} darkMode={darkMode}/>
             ))}

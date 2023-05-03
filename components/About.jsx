@@ -18,7 +18,7 @@ const About = ({darkMode, isUser, user, fetchUser, userPosts}) => {
     <div className='flex flex-col relative pb-10'>
 
       {/* Top Bar */}
-      <div className={`flex items-center w-full ${darkMode && 'bg-black text-white'} p-1 gap-8 sticky top-0 z-10`}>
+      <div className={`flex items-center w-full ${darkMode ? 'bg-black text-white': 'bg-white'} p-1 gap-8 sticky top-0 z-10`}>
         <Link href={'/'} className='rounded-full p-1 hover:bg-grey'>        
             <svg viewBox="0 0 24 24" width={20} aria-hidden="true" fill='currentColor'><g><path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"/></g></svg>
         </Link>
