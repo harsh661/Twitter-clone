@@ -10,9 +10,8 @@ import { AppContext } from "@/contexts/AppContext";
 import Loader from "@/components/Loader";
 
 export default function Home() {
-  const {darkMode} = useContext(AppContext)
+  const {darkMode, fixed} = useContext(AppContext)
   const [posts, setPosts] = useState([])
-  const [fixed, setFixed] = useState(false)
   const supabase = useSupabaseClient()
   const session = useSession()
 
@@ -37,7 +36,7 @@ export default function Home() {
     <main className={`${darkMode && 'bg-black text-white'} flex justify-center mx-auto`}>
         <Sidebar onPost={fetchPosts} darkMode={darkMode}/>
         <section id="posts" className={`flex max-w-[600px] h-[100dvh] ${fixed?'overflow-hidden':'overflow-scroll'} w-full flex-col phone:border-x ${darkMode && 'border-dark-border'}`}>
-          <Topbar setFixed={setFixed} darkMode={darkMode}/>
+          <Topbar darkMode={darkMode}/>
           {session.user && <Form onPost={fetchPosts} phone={true} darkMode={darkMode}/>}
           {/* Posts */}
           <div className={`flex pb-20 flex-col border-t ${darkMode && 'border-dark-border'}`}>

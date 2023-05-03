@@ -66,6 +66,7 @@ const Profile = () => {
           isUser={userId === session.user.id}
           darkMode={darkMode}
           fetchUser={fetchUser}
+          userPosts={userPosts}
         />
         : <Loader />
       }

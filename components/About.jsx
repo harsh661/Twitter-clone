@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Loader from './Loader'
 import EditForm from './EditForm'
 
-const About = ({darkMode, isUser, user, fetchUser}) => {
+const About = ({darkMode, isUser, user, fetchUser, userPosts}) => {
 
   const [showEdit, setShowEdit] = useState(false)
 
@@ -24,7 +24,9 @@ const About = ({darkMode, isUser, user, fetchUser}) => {
         </Link>
         <div className='flex flex-col'>
           <h2 className='text-xl font-bold'>{user.name}</h2>
-          <span className='text-sm text-gray-text'>2 Tweets</span>
+          <span className='text-sm text-gray-text'>
+            {userPosts ? userPosts.length : 0} tweets
+          </span>
         </div>
       </div>
 

@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { UserContext } from '@/contexts/UserContext'
 import { AppContext } from '@/contexts/AppContext'
 
-const Topbar = ({setFixed}) => {
-  const {darkMode, setDarkMode} = useContext(AppContext)
+const Topbar = () => {
+  const {darkMode, setDarkMode, setFixed} = useContext(AppContext)
   const {user} = useContext(UserContext)
   const [nav, setNav] = useState(false)
   const active = 'font-bold text-black'
