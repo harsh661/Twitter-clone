@@ -25,6 +25,7 @@ export default function Home() {
       .order('created_at', {ascending: false})
       .then(res => {
         setPosts(res.data)
+        console.log(res)
       })
   }
 

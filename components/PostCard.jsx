@@ -14,10 +14,44 @@ const PostCard = ({content, file, created_at, id, profiles:profile, darkMode}) =
   const supabase = useSupabaseClient()
   const {user} = useContext(UserContext)
   const [likes, setLikes] = useState([])
+  const [image, setImage] = useState('')
 
   useEffect(() => {
     fetchLikes()
+    if(file) {
+        base64ToPNG(file)
+    }
   },[])
+
+    //converting base64 to PNG
+
+    function base64ToPNG(base64) {
+        const matches = base64.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+        if (!matches || matches.length !== 3) {
+            throw new Error('Invalid base64 string');
+        }
+        
+        const contentType = matches[1];
+        const byteCharacters = atob(matches[2]);
+        const byteArrays = [];
+        
+        for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
+            const slice = byteCharacters.slice(offset, offset + 1024);
+        
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+            }
+        
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        
+        const blob = new Blob(byteArrays, { type: contentType });
+        const png = URL.createObjectURL(blob);
+        setImage(png)
+    }
+
 
   const fetchLikes = () => {
     supabase.from('likes').select().eq('post_id', id)
@@ -72,7 +106,17 @@ const PostCard = ({content, file, created_at, id, profiles:profile, darkMode}) =
                     {content}
                 </p>
                 {file && 
-                <img src={file} alt="post" className={`w-full rounded-2xl border my-3 ${darkMode && 'border-dark-border'}`}/>}
+                    <Image
+                        src={image}
+                        alt="My Image"
+                        layout="responsive"
+                        width={500}
+                        height={500}
+                        loading='lazy'
+                        className={`w-full rounded-2xl border my-3 ${darkMode && 'border-dark-border'}`}
+                    />
+                }
+
             </div>
             <div className='flex pt-2 items-center gap-10 text-sm text-gray-500'>
                 {/* Comments */}
