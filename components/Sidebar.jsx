@@ -28,6 +28,8 @@ const Sidebar = ({onPost}) => {
     const logOut = async () => {
         const { error } = await supabase.auth.signOut()
     }
+
+    const item = `${darkMode ? 'hover:bg-hover':'hover:bg-grey'} p-2 font-semibold`
   return (
     <>
     {form && <Compose onPost={onPost} setForm={setForm}/>}
@@ -76,16 +78,14 @@ const Sidebar = ({onPost}) => {
                 <span className='hidden xl:block cursor-pointer'>
                     <svg onClick={()=>setCard(prev=>!prev)} viewBox="0 0 24 24" aria-hidden="true" width="24"  height="24" ><g fill="currentColor"><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" fill="currentColor"></path></g></svg>
                 </span>
-                <div className={`${card ? 'flex': 'hidden'} ${darkMode ? 'card-light bg-dark-mode text-white': 'bg-white card'} flex-col absolute w-60 -top-48 left-3 gap-2 p-3`}>
-                    <Link href={`/profile/${user?.id}`} className={`${darkMode ? 'hover:bg-hover':'hover:bg-grey'} py-1 px-2 rounded-md font-semibold`}>Profile</Link>
-                    <span onClick={logOut} className={`${darkMode ? 'hover:bg-hover':'hover:bg-grey'} py-1 px-2 rounded-md font-semibold`}>Log out</span>
-                    <label htmlFor="theme" className='flex items-center gap-3 font-semibold'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-                            <path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                        </svg>
+                {/* Menu card */}
+                <div className={`${card ? 'flex': 'hidden'} ${darkMode ? 'card-light bg-dark-mode text-white': 'bg-white card'} flex-col absolute w-60 -top-48 left-3 py-3`}>
+                    <Link href={`/profile/${user?.id}`} className={item}>Profile</Link>
+                    <span onClick={logOut} className={item}>Log out</span>
+                    <label htmlFor="theme" className={item}>
                         Display
                     </label>
-                    <select className='bg-transparent' name="theme" id="theme">
+                    <select className='bg-transparent px-2' name="theme" id="theme">
                         <option className='cursor-pointer' value="false" onClick={()=>{setDarkMode(false); setCard(false)}}>Default</option>
                         <option className='cursor-pointer' value="true" onClick={()=>{setDarkMode(true); setCard(false)}}>Lights out</option>
                     </select>
