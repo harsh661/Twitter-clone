@@ -8,11 +8,13 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { UserContext } from '@/contexts/UserContext'
 import Image from 'next/image'
 import ContextMenu from './ContextMenu'
+import { AppContext } from '@/contexts/AppContext'
 TimeAgo.locale(en)
 
-const PostCard = ({content, file, created_at, id, profiles:profile, darkMode, onDelete}) => {
+const PostCard = ({content, file, created_at, id, profiles:profile, onDelete}) => {
 
   const supabase = useSupabaseClient()
+  const {darkMode} = useContext(AppContext)
   const {user} = useContext(UserContext)
   const [likes, setLikes] = useState([])
   const [menu, setMenu] = useState(false)
@@ -110,7 +112,7 @@ const PostCard = ({content, file, created_at, id, profiles:profile, darkMode, on
                     <svg onClick={()=>setMenu(prev=>!prev)} viewBox="0 0 24 24" aria-hidden="true" width="20"  height="20" ><g fill="currentColor"><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" fill="currentColor"></path></g></svg>
 
                     {/* Display context menu */}
-                    {menu && <ContextMenu onDelete={onDelete} darkMode={darkMode} user={user} id={id} profile={profile}/>}
+                    {menu && <ContextMenu setMenu={setMenu} onDelete={onDelete} darkMode={darkMode} user={user} id={id} profile={profile}/>}
                 </span>
             </div>
             <div className='flex flex-col'>

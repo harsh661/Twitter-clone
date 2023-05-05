@@ -1,8 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useContext, useState } from 'react'
 import Avatar from './Avatar'
 import { UserContext } from '@/contexts/UserContext'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import Link from 'next/link'
+import Loader from './Loader'
 
 const Form = ({onPost, setForm, phone}) => {
   const {user} = useContext(UserContext)
@@ -40,9 +41,11 @@ const Form = ({onPost, setForm, phone}) => {
     }
   }
 
+  if(!user) return
+
   return (
-    <div className={`${!user && 'hidden'} ${phone && 'hidden phone:flex'} flex gap-3 p-3 `}>
-        <Avatar url={user?.avatar}/>
+    <div className={`${phone && 'hidden phone:flex'} flex gap-3 p-3 `}>
+        <Link href={`/profile/${user.id}`}><Avatar url={user?.avatar}/></Link>
         <form onSubmit={e=>e.preventDefault()} className='flex flex-col w-full'>
             <textarea value={content} onChange={e => setContent(e.target.value)} name="post" id="post" className='outline-none bg-transparent p-2 w-full resize-y text-xl' placeholder="What's Happening?" />
             {file !== '' && 

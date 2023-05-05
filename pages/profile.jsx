@@ -1,7 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useContext, useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
-import RightPanel from "@/components/RightPanel";
 import { useRouter } from "next/router";
 import PostCard from "@/components/PostCard";
 import About from "@/components/About";
@@ -9,23 +7,24 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { AppContext } from "@/contexts/AppContext";
 import Login from "./login";
 import Loader from "@/components/Loader";
+import AppLayout from "@/layouts/AppLayout";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
-  const [userPosts, setUserPosts] = useState(null)
-  const router = useRouter()
-  const userId = router.query.id
-  const { darkMode } = useContext(AppContext)
-  const supabase = useSupabaseClient()
-  const session = useSession()
+  const [userPosts, setUserPosts] = useState(null);
+  const router = useRouter();
+  const userId = router.query.id;
+  const { darkMode } = useContext(AppContext);
+  const supabase = useSupabaseClient();
+  const session = useSession();
 
   useEffect(() => {
     fetchUser()
     fetchUserPosts()
-  }, [userId]) // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId])
 
   const fetchUser = () => {
-    if (!userId) return
+    if (!userId) return;
     supabase
       .from("profiles")
       .select()
@@ -36,64 +35,74 @@ const Profile = () => {
   }
 
   const fetchUserPosts = () => {
-    if(!userId) return
-    supabase.from('posts')
-      .select('id, content, file, created_at, profiles(id, avatar, name)')
+    if (!userId) return;
+    supabase
+      .from("posts")
+      .select("id, content, file, created_at, profiles(id, avatar, name)")
       .eq("author", userId)
-      .order('created_at', {ascending: false})
-      .then(res => {
-        setUserPosts(res.data)
+      .order("created_at", { ascending: false })
+      .then((res) => {
+        setUserPosts(res.data);
       })
   }
 
   if (!session) return <Login />
 
-  const active = 'font-bold text-black'
+  const active = "font-bold text-black"
 
   return (
-    <main
-      className={`${
-        darkMode && "bg-black text-white"
-      } flex justify-center mx-auto`}
-    >
-      <Sidebar darkMode={darkMode} />
-      <section className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col phone:border-x ${darkMode && "border-dark-border"}`}>
+    <AppLayout>
+      <section
+        className={`flex max-w-[600px] h-[100dvh] overflow-scroll w-full flex-col phone:border-x ${
+          darkMode && "border-dark-border"
+        }`}
+      >
+        {profile ? (
+          <About
+            user={profile[0]}
+            isUser={userId === session.user.id}
+            darkMode={darkMode}
+            fetchUser={fetchUser}
+            userPosts={userPosts}
+          />
+        ) : (
+          <Loader />
+        )}
 
-      {
-      profile ?
-        <About
-          user={profile[0]}
-          isUser={userId === session.user.id}
-          darkMode={darkMode}
-          fetchUser={fetchUser}
-          userPosts={userPosts}
-        />
-        : <Loader />
-      }
-
-      {/* Tabs for tweets and likes */}
-          <div className={`flex w-full cursor-pointer border-b ${darkMode && 'border-dark-border'}`}>
-            <div className={`flex-1 py-3 relative flex items-center justify-center ${darkMode?'hover:bg-hover text-white': 'hover:bg-grey'} ${active}`}>
-              <span>Tweets</span>
-              <span className='bg-accent h-1 w-14 absolute bottom-0'></span>
-            </div>
-            <div className={`${darkMode?'hover:bg-hover text-white': 'hover:bg-grey'} flex-1 py-3 relative flex items-center justify-center hover:bg-grey`}>
-              <span>Likes</span>
-            </div>
+        {/* Tabs for tweets and likes */}
+        <div
+          className={`flex w-full cursor-pointer border-b ${
+            darkMode && "border-dark-border"
+          }`}
+        >
+          <div
+            className={`flex-1 py-3 relative flex items-center justify-center ${
+              darkMode ? "hover:bg-hover text-white" : "hover:bg-grey"
+            } ${active}`}
+          >
+            <span>Tweets</span>
+            <span className="bg-accent h-1 w-14 absolute bottom-0"></span>
           </div>
-
-      {/* Display Posts*/}
-      {userPosts &&
-        <div className="flex flex-col pb-20">
-            {userPosts.map(post => (
-              <PostCard key={post.id} {...post} darkMode={darkMode}/>
-            ))}
+          <div
+            className={`${
+              darkMode ? "hover:bg-hover text-white" : "hover:bg-grey"
+            } flex-1 py-3 relative flex items-center justify-center hover:bg-grey`}
+          >
+            <span>Likes</span>
+          </div>
         </div>
-      }
+
+        {/* Display Posts*/}
+        {userPosts && (
+          <div className="flex flex-col pb-20">
+            {userPosts.map((post) => (
+              <PostCard key={post.id} {...post} />
+            ))}
+          </div>
+        )}
       </section>
-      <RightPanel darkMode={darkMode} />
-    </main>
-  );
-};
+    </AppLayout>
+  )
+}
 
 export default Profile;

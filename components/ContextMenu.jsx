@@ -1,9 +1,14 @@
+import { AppContext } from '@/contexts/AppContext'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
-const ContextMenu = ({darkMode, user, id, profile, onDelete}) => {
+const ContextMenu = ({user, id, profile, onDelete, setMenu}) => {
     const session = useSession()
+    const {darkMode} = useContext(AppContext)
     const supabase = useSupabaseClient()
+    const [saved, setSaved] = useState(false)
+
+
     const deletePost = () => {
         supabase.from('posts')
         .delete()
@@ -12,6 +17,17 @@ const ContextMenu = ({darkMode, user, id, profile, onDelete}) => {
             onDelete()
         })
     }
+
+    const savePost = () => {
+        setSaved(true)
+    }
+
+    const unsavePost = () => {
+        setSaved(false)
+    }
+
+  if(!user) return
+
   return (
     <div className={`${darkMode?'bg-black card-light': 'bg-white card'} z-50 flex w-max flex-col py-2 font-medium absolute top-8 right-0`}>
     {user.id === profile.id
@@ -30,12 +46,22 @@ const ContextMenu = ({darkMode, user, id, profile, onDelete}) => {
             <span>Follow {profile.name}</span>
         </span>
     }
-    <span className={`flex items-center ${!darkMode?'hover:bg-grey':'hover:bg-hover'} gap-2 py-2 px-5`}>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-        </svg>
-        <span>Bookmark this post</span>
-    </span>
+    {saved
+        ? 
+        <span onClick={unsavePost} className={`flex items-center ${!darkMode?'hover:bg-grey':'hover:bg-hover'} gap-2 py-2 px-5`}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3l1.664 1.664M21 21l-1.5-1.5m-5.485-1.242L12 17.25 4.5 21V8.742m.164-4.078a2.15 2.15 0 011.743-1.342 48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185V19.5M4.664 4.664L19.5 19.5" />
+            </svg>
+            <span>Remove bookmark</span>
+        </span>
+        : 
+        <span onClick={savePost} className={`flex items-center ${!darkMode?'hover:bg-grey':'hover:bg-hover'} gap-2 py-2 px-5`}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+            </svg>
+            <span>Bookmark this post</span>
+        </span>
+    }
     <span className={`flex items-center ${!darkMode?'hover:bg-grey':'hover:bg-hover'} gap-2 py-2 px-5`}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />

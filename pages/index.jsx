@@ -17,11 +17,11 @@ export default function Home() {
 
   useEffect(() => {
     fetchPosts()
-  }, []) // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const fetchPosts = () => {
     supabase.from('posts')
-      .select('id, content, file, created_at, profiles(id, avatar, name, isVerified)')
+      .select('id, content, file, created_at, parent, profiles(id, avatar, name, isVerified)')
       .order('created_at', {ascending: false})
       .then(res => {
         setPosts(res.data)
@@ -34,18 +34,18 @@ export default function Home() {
 
   return (
     <main className={`${darkMode && 'bg-black text-white'} flex justify-center mx-auto`}>
-        <Sidebar onPost={fetchPosts} darkMode={darkMode}/>
-        <section id="posts" className={`flex max-w-[600px] h-[100dvh] ${fixed?'overflow-hidden':'overflow-scroll'} w-full flex-col phone:border-x ${darkMode && 'border-dark-border'}`}>
-          <Topbar darkMode={darkMode}/>
-          {session.user && <Form setForm={()=>{}} onPost={fetchPosts} phone={true} darkMode={darkMode}/>}
-          {/* Posts */}
-          <div className={`flex pb-20 flex-col border-t ${darkMode && 'border-dark-border'}`}>
-            {posts?.length ? posts.map(post => (
-              <PostCard onDelete={fetchPosts} key={post.id} {...post} darkMode={darkMode}/>
-            )) : <Loader />}
-          </div>
-        </section>
-        <RightPanel darkMode={darkMode}/>
+        <Sidebar onPost={fetchPosts}/>
+          <section id="posts" className={`flex max-w-[600px] h-[100dvh] ${fixed?'overflow-hidden':'overflow-scroll'} w-full flex-col phone:border-x ${darkMode && 'border-dark-border'}`}>
+            <Topbar darkMode={darkMode}/>
+            {session.user && <Form setForm={()=>{}} onPost={fetchPosts} phone={true} darkMode={darkMode}/>}
+            {/* Posts */}
+            <div className={`flex pb-20 flex-col border-t ${darkMode && 'border-dark-border'}`}>
+              {posts?.length ? posts.map(post => (
+                <PostCard onDelete={fetchPosts} key={post.id} {...post} />
+              )) : <Loader />}
+            </div>
+          </section>
+        <RightPanel />
     </main>
   )
 }
