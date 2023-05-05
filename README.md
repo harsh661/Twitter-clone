@@ -18,7 +18,7 @@ The Twitter Clone is a full-stack web application built using Next.js, Tailwind 
 ## Getting Started
 To get started, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/twitter-clone.git`
+1. Clone the repository: `git clone https://github.com/harsh661/Twitter-clone.git`
 2. Install dependencies: `npm install`
 3. Create a `.env.local` file and add your Supabase credentials:
 
