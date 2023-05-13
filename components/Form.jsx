@@ -8,6 +8,7 @@ import Loader from './Loader'
 const Form = ({onPost, setForm, phone}) => {
   const {user} = useContext(UserContext)
   const [file, setFile] = useState('')
+  const [photo, setPhoto] = useState(null)
   const [content, setContent] = useState('')
   const supabase = useSupabaseClient()
   const session = useSession()
@@ -16,7 +17,7 @@ const Form = ({onPost, setForm, phone}) => {
     supabase.from('posts').insert({
       author: session.user.id,
       content,
-      file,
+      file: photo
     }).then(res => {
       if (!res.error) {
         setContent('')
@@ -30,7 +31,7 @@ const Form = ({onPost, setForm, phone}) => {
   }
 
   const uploadPhoto = (e) => {
-    //single file upload
+    //single file upload for thumbnail
     const singleFile = e.target.files[0]
     if (singleFile) {
       const reader = new FileReader();
@@ -38,6 +39,16 @@ const Form = ({onPost, setForm, phone}) => {
       reader.onload = () => {
         setFile(reader.result);
       };
+
+    //Uploadin it to the supabase bucket
+      const newName = Date.now() + singleFile.name
+      supabase.storage.from('photos')
+      .upload(newName, singleFile)
+      .then(res => {
+        if(res.data) {
+          setPhoto(process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/photos/' + res.data.path,)
+        }
+      })
     }
   }
 

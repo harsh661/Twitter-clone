@@ -18,44 +18,10 @@ const PostCard = ({content, file, created_at, id, profiles:profile, onDelete}) =
   const {user} = useContext(UserContext)
   const [likes, setLikes] = useState([])
   const [menu, setMenu] = useState(false)
-  const [image, setImage] = useState('')
 
   useEffect(() => {
     fetchLikes()
-    if(file) {
-        base64ToPNG(file)
-    }
   },[])
-
-    //converting base64 to PNG
-
-    function base64ToPNG(base64) {
-        const matches = base64.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
-        if (!matches || matches.length !== 3) {
-            throw new Error('Invalid base64 string');
-        }
-        
-        const contentType = matches[1];
-        const byteCharacters = atob(matches[2]);
-        const byteArrays = [];
-        
-        for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
-            const slice = byteCharacters.slice(offset, offset + 1024);
-        
-            const byteNumbers = new Array(slice.length);
-            for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-            }
-        
-            const byteArray = new Uint8Array(byteNumbers);
-            byteArrays.push(byteArray);
-        }
-        
-        const blob = new Blob(byteArrays, { type: contentType });
-        const png = URL.createObjectURL(blob);
-        setImage(png)
-    }
-
 
   const fetchLikes = () => {
     supabase.from('likes').select().eq('post_id', id)
@@ -119,9 +85,9 @@ const PostCard = ({content, file, created_at, id, profiles:profile, onDelete}) =
                 <p>
                     {content}
                 </p>
-                {image && 
+                {file && 
                     <Image
-                        src={image}
+                        src={file}
                         alt="My Image"
                         width={500}
                         height={500}
