@@ -5,7 +5,7 @@ const Avatar = ({url}) => {
   return (
     url ?
       <img 
-        src={url}  
+        src={url ? url : '/user.png'}  
         referrerPolicy='no-referrer'
         className={`object-cover rounded-full phone:w-12 phone:h-12 w-10 h-10 flex items-center justify-center`} 
       />

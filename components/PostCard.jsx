@@ -9,10 +9,11 @@ import { UserContext } from '@/contexts/UserContext'
 import Image from 'next/image'
 import ContextMenu from './ContextMenu'
 import { AppContext } from '@/contexts/AppContext'
+import { useRouter } from 'next/router'
 TimeAgo.locale(en)
 
 const PostCard = ({content, file, created_at, id, profiles:profile, onDelete}) => {
-
+  const router = useRouter()
   const supabase = useSupabaseClient()
   const {darkMode} = useContext(AppContext)
   const {user} = useContext(UserContext)
@@ -33,6 +34,9 @@ const PostCard = ({content, file, created_at, id, profiles:profile, onDelete}) =
   const isLiked = !!likes?.find(like => like?.user_id === user?.id)
   
   const toogleLikes = () => {
+    if(!user) {
+        return router.push('/login')
+    }
     //If already liked the dislike
       if (isLiked) {
         supabase.from('likes').delete()

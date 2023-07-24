@@ -23,21 +23,38 @@ const RightPanel = ({forPhone}) => {
   }, [])
 
   const fetchUsers = () => {
-    supabase.from('profiles')
-      .select()
-      .neq('id', session.user.id)
-      .limit(3)
-      .then(res => {
-        setUsers(res.data)
-      })
+    if(session) {
+        supabase.from('profiles')
+            .select()
+            .neq('id', session?.user.id)
+            .limit(3)
+            .then(res => {
+                setUsers(res.data)
+            })
+    } else {
+        supabase.from('profiles')
+            .select()
+            .limit(3)
+            .then(res => {
+                setUsers(res.data)
+            })
+    }
   }
   const fetchAllUsers = () => {
-    supabase.from('profiles')
-      .select()
-      .neq('id', session.user.id)
-      .then(res => {
-        setUsers(res.data)
-      })
+    if(session) {
+        supabase.from('profiles')
+            .select()
+            .neq('id', session?.user.id)
+            .then(res => {
+                setUsers(res.data)
+            })
+    } else {
+        supabase.from('profiles')
+            .select()
+            .then(res => {
+                setUsers(res.data)
+            })
+    }
   }
 
   const getUsers = (e) => {

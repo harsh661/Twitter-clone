@@ -24,7 +24,7 @@ const Profile = () => {
   }, [userId])
 
   const fetchUser = () => {
-    if (!userId) return;
+    if (!userId) return null;
     supabase
       .from("profiles")
       .select()
@@ -35,7 +35,7 @@ const Profile = () => {
   }
 
   const fetchUserPosts = () => {
-    if (!userId) return;
+    if (!userId) return null;
     supabase
       .from("posts")
       .select("id, content, file, created_at, profiles(id, avatar, name)")
@@ -45,8 +45,6 @@ const Profile = () => {
         setUserPosts(res.data);
       })
   }
-
-  if (!session) return <Login />
 
   const active = "font-bold text-black"
 
@@ -60,7 +58,7 @@ const Profile = () => {
         {profile ? (
           <About
             user={profile[0]}
-            isUser={userId === session.user.id}
+            isUser={userId === session?.user?.id}
             darkMode={darkMode}
             fetchUser={fetchUser}
             userPosts={userPosts}

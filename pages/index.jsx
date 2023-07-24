@@ -28,16 +28,12 @@ export default function Home() {
       })
   }
 
-  if(!session) {
-    return <Login />
-  }
-
   return (
     <main className={`${darkMode && 'bg-black text-white'} flex justify-center mx-auto`}>
         <Sidebar onPost={fetchPosts}/>
           <section id="posts" className={`flex max-w-[600px] h-[100dvh] ${fixed?'overflow-hidden':'overflow-scroll'} w-full flex-col phone:border-x ${darkMode && 'border-dark-border'}`}>
             <Topbar darkMode={darkMode}/>
-            {session.user && <Form setForm={()=>{}} onPost={fetchPosts} phone={true} darkMode={darkMode}/>}
+            {session?.user && <Form setForm={()=>{}} onPost={fetchPosts} phone={true} darkMode={darkMode}/>}
             {/* Posts */}
             <div className={`flex pb-20 flex-col border-t ${darkMode && 'border-dark-border'}`}>
               {posts?.length ? posts.map(post => (
