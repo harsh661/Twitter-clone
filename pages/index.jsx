@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Sidebar from "@/components/Sidebar";
 import Form from "@/components/Form";
 import RightPanel from "@/components/RightPanel";
@@ -27,6 +27,8 @@ export default function Home() {
         setPosts(res.data)
       })
   }
+
+  if(!session) return <Login />
 
   return (
     <main className={`${darkMode && 'bg-black text-white'} flex justify-center mx-auto`}>
